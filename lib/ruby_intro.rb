@@ -3,40 +3,35 @@
 
 def sum arr
   result = 0
-  for value in arr
-    result+=value
-  end
+  arr.each {|value| result+=value}
   result
 end
 
+
 def max_2_sum arr
-  num1 = arr.max
-  
-  if arr.length >1
-    arr.delete_at(arr.index(num1))
-    num2 = arr.max
-  
-  elsif arr.length == 1
-    return num1
-  
-  else 
-    return 0
-  
+  arr = arr.sort
+  if arr.length>0
+    num1 = arr[-1]
+  else
+    num1 = 0
   end
-  
-  num1 + num2
+
+  if arr.length>1
+    num2 = arr[-2]
+  else
+    num2 = 0
+  end
+  num1+num2
 end
 
-def sum_to_n? arr, n
-  for i in arr
-    for j in arr
-      if i + j == n and i !=j
-        return true
-      end
-    end
-  end
-  false
+def sum_to_n? arr,n
+  arr.any? {|num1|
+    arr_tmp = arr
+    arr_tmp.delete(num1)
+    arr_tmp.any?{|num2| num2+num1 == n}
+  }
 end
+
 
 # Part 2
 
@@ -44,38 +39,14 @@ def hello(name)
   return "Hello, " + name
 end
 
-def starts_with_consonant? s
-  if s==''
-    return false
-  else
-    first = s[0] #get first letter
-    if first =~ /[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]/
-      return true
-    else
-      return false
-    end
-  end
+def starts_with_consonant? s 
+  s =~ /\A[bcdfghjklmnpqrstvwxyz]/i
 end
 
 def binary_multiple_of_4? s
-  #check if it's binary
-  for i in s.chars
-    if i != "0" and i != "1"
-      return false
-    end
-  end
-  
-  #check if it is divisible by 4 (decided by checking if the last two digits are 0)
-  if s.length == 1
-    if s[-1] == "0"
-      return true
-    end
-  else 
-    if s[-1] == "0" and s[-2] == "0"
-      return true
-    end
-  end
+  s =~ /\A[01]*00$/ or s=="0"
 end
+
 
 # Part 3
 
